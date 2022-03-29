@@ -1,0 +1,5 @@
+Fs module:
+    Create one file
+read.txt and write some content to it
+Read that content in /read api using express 
+That means you have to send the contents of the file as response of api in browser.
