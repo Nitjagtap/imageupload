@@ -7,30 +7,34 @@ const bodyParser = require('body-parser');
 const multipart = require('connect-multiparty');
 const multer = require('multer');
 const router = require('./routes/router');
+const path = require('path');
 const upload =multer()
 
 
+app.set('public', path.join(__dirname, 'public'));
+app.set('public engine', 'html')
 
 
 
 // for parsing multipart/form-data
 
 router.use(upload.array());  
-router.use(express.static('public'));
+router.use(express.static(path.join(__dirname,"./public")));
 
 // to support JSON-encoded bodies
 
-app.use( express.json() );
+app.use( bodyParser.json() );
 
 // for parsing application/x-www-form-urlencoded 
 
-app.use(express.urlencoded({    
-  extended: false
+app.use(bodyParser.urlencoded({    
+  extended : true
 })); 
 app.use('/', routers)
 
 pool.connect((err)=>{
  if(err) throw err
+ 
  else{
      console.log("connect with database")
  }

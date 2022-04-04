@@ -3,15 +3,17 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const read = require("../controllers/read");
+const Topselling = require("../controllers/topselling");
 const Upload = require("../controllers/upload");
 const pool = require("../db/database");
 const router = express.Router()
 
 
 
+
 const imageStorage = multer.diskStorage({
     // Destination to store image     
-    destination: 'images', 
+    destination: 'public/images/', 
       filename: (req, file, cb) => {
           cb(null, file.fieldname + '_' + Date.now() 
              + path.extname(file.originalname))
@@ -37,6 +39,12 @@ const imageUpload = multer({
 
 // For Single image upload
 router.post('/uploadImage', imageUpload.single('image'),Upload.upload)
+
+router.get('/image',Upload.image);
+
+router.get('/topselling',Topselling.selling);
+
+
 module.exports=router;
 
  

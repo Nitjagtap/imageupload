@@ -1,5 +1,6 @@
-//const multer = require("multer");
+const multer = require("multer");
 const pool = require("../db/database");
+const path = require('path')
 
 
 class Upload {
@@ -7,7 +8,7 @@ class Upload {
 
         try {
 
-            const image = req.file
+            const image = req.file.filename
             const prodid = req.body.prodid
             const prodname = req.body.prodname
 
@@ -35,6 +36,31 @@ class Upload {
         } catch (error) {
             console.log(error)
             res.status(400).send({ error: error.message })
+
+        }
+    }
+
+    static async image(req , res){
+        try {
+            const query1 = "select * from products";
+            const result = await pool.query(query1,(err,data)=>{
+                if (err) {
+                    console.log(err);
+            res.status(404).send({ err: error.message });
+
+                } else {
+                    console.log(data)
+                    res.writeHead(200, {
+                        'Content-Type': 'image/jpg',
+                        
+                    });
+                    res.send(result); // Send the image to the browser.
+            
+                }
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(400).send({ error: error.message });
 
         }
     }
